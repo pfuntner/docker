@@ -9,4 +9,4 @@ I would run this from Windows 10 but I imagine it would work from Linux as well.
 ## Issues
 There are some issues with this:
 * The biggest issue is that I never got networking working correctly.  I can ping sites on the internet by their dotted address but not by hostname so I guess it's a DNS issue but I still haven't found a solution.
-** The reason for wanting DNS working is because the container still doesn't have Ansible installed.
+  * The reason for wanting DNS working is because the container still doesn't have Ansible installed.  I am not able to install Ansible because I can't reach the outside work from inside the container.

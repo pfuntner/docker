@@ -6,7 +6,7 @@ all: .run
 
 .kill:
 	-docker kill ansible
-	-docker rm ansible
+	-docker rm -f ansible
 
 .run: .kill .build
 	docker run --dns 8.8.8.8 --dns 8.8.4.4  --detach --name ansible bruno_ansible
