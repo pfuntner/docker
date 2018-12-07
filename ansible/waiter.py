@@ -10,5 +10,6 @@ with open('/tmp/waiter.log', 'w') as stream:
     now = datetime.datetime.now()
     msg = '{pgm} running at {now}'.format(**locals())
     stream.write('{msg}\n'.format(**locals()))
+    stream.flush()
     print msg
     time.sleep(60**2)
