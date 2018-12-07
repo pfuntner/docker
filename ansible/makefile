@@ -9,7 +9,7 @@ all: .run
 	-docker rm ansible
 
 .run: .kill .build
-	docker run --detach --name ansible bruno_ansible
+	docker run --dns 8.8.8.8 --dns 8.8.4.4  --detach --name ansible bruno_ansible
 	touch .run
 	@echo
 	@echo "Now run (not from cygwin!): docker exec -it ansible bash"
