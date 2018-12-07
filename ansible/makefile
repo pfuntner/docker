@@ -1,6 +1,6 @@
 all: .run
 
-.build: Dockerfile
+.build: Dockerfile waiter.py
 	docker build -t bruno_ansible .
 	touch .build
 
