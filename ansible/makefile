@@ -6,7 +6,7 @@ all: .run
 
 .kill:
 	-docker kill ansible
-	-docker rm ansible
+	-docker rm -f ansible
 
 .run: .kill .build
 	docker run --detach --name ansible bruno_ansible
