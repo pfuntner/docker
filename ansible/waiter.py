@@ -3,8 +3,12 @@
 import sys
 import time
 import datetime
+import subprocess
 
 pgm = sys.argv[0]
+
+subprocess.Popen(['/usr/sbin/sshd']).wait()
+
 with open('/tmp/waiter.log', 'w') as stream:
   while True:
     now = datetime.datetime.now()

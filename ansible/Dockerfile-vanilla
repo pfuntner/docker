@@ -3,12 +3,18 @@ WORKDIR /root
 
 COPY waiter.py /tmp
 
-RUN apt update && apt install -y ansible vim less
+RUN apt update && apt install -y vim less openssh-server
+RUN systemctl enable ssh
+RUN mkdir -p /run/sshd
 
 RUN echo export PAGER=less >> /root/.profile
 RUN echo export EDITOR=vi >> /root/.profile
 
 RUN echo set -o vi >> /root/.bashrc
 RUN echo alias more=less >> /root/.bashrc
+
+RUN mkdir -pv /root/.ssh
+COPY .ssh/* /root/.ssh/
+RUN chmod -R 700 .ssh
 
 cmd ["python", "/tmp/waiter.py"]
