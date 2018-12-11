@@ -1,3 +1,4 @@
 */.build
 */.run
 */.ssh
+ansible/ips.json
