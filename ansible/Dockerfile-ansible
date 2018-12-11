@@ -4,9 +4,12 @@ WORKDIR /root
 COPY waiter.py /tmp
 COPY setup.py /tmp
 
-RUN apt update && apt install -y ansible vim less openssh-server
+RUN apt update && apt install -y ansible vim less openssh-server sudo
 RUN systemctl enable ssh
 RUN mkdir -p /run/sshd
+
+RUN echo vanilla1 >> /etc/ansible/hosts
+RUN echo vanilla2 >> /etc/ansible/hosts
 
 RUN mkdir -pv /root/.ssh
 COPY .ssh/* /root/.ssh/
