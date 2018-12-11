@@ -10,11 +10,11 @@ all: .run
 	docker build -f Dockerfile-vanilla -t bruno_vanilla .
 	touch .build
 
-.kill:
+kill:
 	-docker kill ansible vanilla1 vanilla2
 	-docker rm -f ansible vanilla1 vanilla2
 
-.run: .kill .build .ssh setup.py gather_ips.py
+.run: kill .build .ssh setup.py gather_ips.py
 	docker run --dns 8.8.8.8 --dns 8.8.4.4 --hostname ansible --detach --name ansible bruno_ansible
 	docker run --dns 8.8.8.8 --dns 8.8.4.4 --hostname vanilla1 --detach --name vanilla1 bruno_vanilla
 	docker run --dns 8.8.8.8 --dns 8.8.4.4 --hostname vanilla2 --detach --name vanilla2 bruno_vanilla
@@ -33,6 +33,6 @@ all: .run
 	@echo
 	@echo "Now run (not from cygwin!): docker exec -it ansible bash"
 
-clean: .kill
+clean: kill
 	-docker rmi -f bruno_ansible bruno_vanilla
 	rm -frv .build .run .ssh ips.json
