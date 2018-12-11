@@ -24,6 +24,7 @@ def customize_profiles(user):
   with open('.bashrc', 'a') as stream:
     stream.write('set -o vi\n')
     stream.write('alias more=less\n')
+    stream.write('alias br="vi -R"\n')
 
 ips = {}
 with open('/tmp/ips.json') as stream:
