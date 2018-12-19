@@ -3,6 +3,7 @@ WORKDIR /root
 
 COPY waiter.py /tmp
 COPY setup.py /tmp
+COPY myshell /usr/bin
 
 RUN apt update && apt install -y vim less openssh-server sudo
 RUN systemctl enable ssh

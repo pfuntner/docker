@@ -5,7 +5,7 @@ all: .run
 	ssh-keygen -t rsa -f .ssh/id_rsa -N ""
 	cp .ssh/id_rsa.pub .ssh/authorized_keys
 
-.build: .ssh Dockerfile-ansible Dockerfile-vanilla waiter.py setup.py
+.build: .ssh Dockerfile-ansible Dockerfile-vanilla waiter.py setup.py myshell
 	docker build -f Dockerfile-ansible -t bruno_ansible .
 	docker build -f Dockerfile-vanilla -t bruno_vanilla .
 	touch .build

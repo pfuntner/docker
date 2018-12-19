@@ -1,0 +1,28 @@
+#! /usr/bin/env python
+
+import re
+import os
+import sys
+import datetime
+import StringIO
+
+sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
+sys.stderr = os.fdopen(sys.stderr.fileno(), 'w', 0)
+
+sys.stderr.write('argv: {argv}\n'.format(argv=sys.argv))
+
+stream = sys.stdin
+if (len(sys.argv) == 3) and (sys.argv[1] == '-c'):
+  stream = StringIO.StringIO('{cmd}\n'.format(cmd=sys.argv[2]))
+elif (len(sys.argv) == 2) and (sys.argv[1].startswith('-c')):
+  stream = StringIO.StringIO('{cmd}\n'.format(cmd=sys.argv[1][2:]))
+
+while True:
+  sys.stdout.write('$ ')
+  cmd = stream.readline()
+  if (not cmd) or re.match('\s*exit$', cmd):
+    break
+  elif re.match('\s*date$', cmd):
+    sys.stdout.write('{now}\n'.format(now=datetime.datetime.now().isoformat()))
+  else:
+    sys.stderr.write('What?\n')
