@@ -43,7 +43,7 @@ with open('/etc/hosts', 'a') as stream:
   for (host, ip) in ips.items():
     stream.write('{ip} {host}\n'.format(**locals()))
 
-run('chown +rx /root')
+run('chmod a+rx /root')
 add_to_known_hosts('root')
 customize_profiles('root')
 
