@@ -18,10 +18,17 @@ def add_to_known_hosts(user):
 def customize_profiles(user):
   print 'Customizing {user}\'s profiles'.format(**locals())
   with open('.profile', 'a') as stream:
-    stream.write('export PAGER=less\n')
+    stream.write('export PAGER=less\n\n')
     stream.write('export EDITOR=vi\n')
+    stream.write('PATH=$PATH:/root/bin\n')
 
   with open('.bashrc', 'a') as stream:
+    # repeat environment variables from .profile because .profile isn't run when you use `docker exec -it ansible bash`
+    stream.write('export PAGER=less\n\n')
+    stream.write('export EDITOR=vi\n')
+    stream.write('PATH=$PATH:/root/bin\n\n')
+
+    # these are just for .bashrc
     stream.write('set -o vi\n')
     stream.write('alias more=less\n')
     stream.write('alias br="vi -R"\n')
@@ -36,6 +43,7 @@ with open('/etc/hosts', 'a') as stream:
   for (host, ip) in ips.items():
     stream.write('{ip} {host}\n'.format(**locals()))
 
+run('chown +rx /root')
 add_to_known_hosts('root')
 customize_profiles('root')
 
