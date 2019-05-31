@@ -8,11 +8,12 @@ COPY myshell /usr/bin
 COPY bin /root/bin
 RUN chmod -R +rx bin
 
-RUN apt update && apt install -y vim less openssh-server sudo sshpass ansible
-RUN pip install pyyaml
+RUN apt update && apt install -y vim less openssh-server sudo sshpass 
+RUN pip install pyyaml ansible requests
 RUN systemctl enable ssh
 RUN mkdir -p /run/sshd
 
+RUN mkdir /etc/ansible
 RUN echo vanilla1 >> /etc/ansible/hosts
 RUN echo vanilla2 >> /etc/ansible/hosts
 
