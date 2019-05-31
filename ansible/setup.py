@@ -31,7 +31,6 @@ def customize_profiles(user):
     # these are just for .bashrc
     stream.write('set -o vi\n')
     stream.write('alias more=less\n')
-    stream.write('alias br="vi -R"\n')
     stream.write('alias r="fc -s"\n')
 
 ips = {}
