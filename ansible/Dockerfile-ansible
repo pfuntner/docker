@@ -9,6 +9,7 @@ COPY bin /root/bin
 RUN chmod -R +rx bin
 
 RUN apt update && apt install -y vim less openssh-server sudo sshpass ansible
+RUN pip install pyyaml
 RUN systemctl enable ssh
 RUN mkdir -p /run/sshd
 
