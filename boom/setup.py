@@ -10,11 +10,6 @@ import subprocess
 def run(cmd):
   subprocess.Popen(cmd.split()).wait()
 
-def add_to_known_hosts(user):
-  print 'Adding to .ssh/known_hosts for {user}'.format(**locals())
-  for host in ['localhost', 'ansible', 'vanilla1', 'vanilla2']:
-    run('ssh {host} -o StrictHostKeyChecking=no true'.format(**locals()))
-
 def customize_profiles(user):
   print 'Customizing {user}\'s profiles'.format(**locals())
   with open('.profile', 'a') as stream:
@@ -33,17 +28,7 @@ def customize_profiles(user):
     stream.write('alias more=less\n')
     stream.write('alias r="fc -s"\n')
 
-ips = {}
-with open('/tmp/ips.json') as stream:
-  ips = json.load(stream)
-
-print '\nAdding {ips} to /etc/hosts'.format(**locals())
-with open('/etc/hosts', 'a') as stream:
-  for (host, ip) in ips.items():
-    stream.write('{ip} {host}\n'.format(**locals()))
-
 run('chmod a+rx /root')
-add_to_known_hosts('root')
 customize_profiles('root')
 
 print 'Creating user peon'
@@ -77,5 +62,4 @@ print 'peon uid is {peon}'.format(**locals())
 
 os.setuid(peon)
 os.chdir('/home/peon')
-add_to_known_hosts('peon')
 customize_profiles('peon')

@@ -3,25 +3,15 @@ WORKDIR /root
 
 COPY waiter.py /tmp
 COPY setup.py /tmp
-COPY myshell /usr/bin
 
 COPY bin /root/bin
-COPY pings /root/bin
 RUN chmod -R +rx bin
 
 RUN apt update && apt install -y vim less openssh-server sudo sshpass 
-RUN pip install pyyaml ansible requests
+RUN pip install pyyaml requests
 RUN systemctl enable ssh
 RUN mkdir -p /run/sshd
 
-RUN mkdir /etc/ansible
-RUN echo localhost >> /etc/ansible/hosts
-RUN echo >> /etc/ansible/hosts
-RUN echo '[vanilla]' >> /etc/ansible/hosts
-RUN echo vanilla1 >> /etc/ansible/hosts
-RUN echo vanilla2 >> /etc/ansible/hosts
-
-RUN mkdir -pv /root/.ssh
 COPY .ssh/* /root/.ssh/
 RUN chmod -R 700 .ssh
 

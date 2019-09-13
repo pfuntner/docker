@@ -2,18 +2,23 @@
 
 import sys
 import time
-import datetime
-import subprocess
+import random
+import logging
+import argparse
 
-pgm = sys.argv[0]
+parser = argparse.ArgumentParser(description=sys.argv[0])
+parser.add_argument('seconds', type=int, nargs='?', help='Number of seconds to sleep')
+args = parser.parse_args()
 
-subprocess.Popen(['/usr/sbin/sshd']).wait()
+logging.basicConfig(format='%(asctime)s %(levelname)s %(pathname)s:%(lineno)d %(msg)s')
+log = logging.getLogger()
+log.setLevel(logging.DEBUG)
 
-with open('/tmp/waiter.log', 'w') as stream:
-  while True:
-    now = datetime.datetime.now()
-    msg = '{pgm} running at {now}'.format(**locals())
-    stream.write('{msg}\n'.format(**locals()))
-    stream.flush()
-    print msg
-    time.sleep(60**2)
+if not args.seconds:
+  args.seconds = random.randint(60, 5*60)
+
+log.debug('Started, sleeping for {args.seconds} seconds'.format(**locals()))
+time.sleep(args.seconds)
+log.debug('Raising exception')
+
+raise Exception('Good bye, cruel world!')

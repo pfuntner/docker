@@ -5,14 +5,14 @@ all: .run
 	ssh-keygen -t rsa -f .ssh/id_rsa -N ""
 	cp -v .ssh/id_rsa.pub .ssh/authorized_keys
 
-.build: .ssh Dockerfile waiter.py setup.py myshell
+.build: .ssh Dockerfile waiter.py setup.py
 	mkdir -pv bin
 	-cp -v $(HOME)/bin/* bin
 	docker build -f Dockerfile -t boom-image .
 	touch .build
 
 kill:
-	-docker kill boom
+	-docker kill -f boom
 
 .run: kill .build .ssh setup.py
 	docker run --hostname boom --detach --name boom boom-image
